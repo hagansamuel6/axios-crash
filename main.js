@@ -60,8 +60,21 @@ function removeTodo() {
   console.log('DELETE Request');
 }
 
+
 // SIMULTANEOUS DATA
 function getData() {
+  axios.all([
+    axios.get('https://jsonplaceholder.typicode.com/posts', 
+    {params: {
+      _limit: 5
+    }}),
+    axios.get('https://jsonplaceholder.typicode.com/todos')
+  ])
+  .then(
+    axios.spread( (posts, todos) => showOutput(posts))
+  )
+  .catch(err => console.log(err));
+  
   console.log('Simultaneous Request');
 }
 
